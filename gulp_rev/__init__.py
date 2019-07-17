@@ -9,8 +9,9 @@ from django.utils.crypto import get_random_string
 _STATIC_MAPPING = None
 
 
-def is_debug():
-    return getattr(settings, 'DEBUG', False)
+def use_versioned_assets():
+    debug = getattr(settings, 'DEBUG', False)
+    return getattr(settings, 'DJANGO_GULP_REV_USE_VERSIONED_ASSETS', debug)
 
 def _get_mapping():
     """
@@ -25,7 +26,7 @@ def _get_mapping():
         manifest_path = getattr(settings,
             'DJANGO_GULP_REV_PATH',
             os.path.join(getattr(settings, 'STATIC_ROOT', ''), 'rev-manifest.json'))
-        
+
         try:
             with open(manifest_path) as manifest_file:
                 _STATIC_MAPPING = json.load(manifest_file)
@@ -71,7 +72,8 @@ def static_rev(path):
     """
     static_path = StaticNode.handle_simple(path)
 
-    if is_debug():
-        return dev_url(static_path)
+    if use_versioned_assets():
+        return production_url(path, static_path)
 
-    return production_url(path, static_path)
+    return dev_url(static_path)
+
