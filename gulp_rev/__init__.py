@@ -11,7 +11,7 @@ _STATIC_MAPPING = None
 
 def use_versioned_assets():
     debug = getattr(settings, 'DEBUG', False)
-    return getattr(settings, 'DJANGO_GULP_REV_USE_VERSIONED_ASSETS', not debug)
+    return getattr(settings, 'GULP_REV_USE_VERSIONED_ASSETS', not debug)
 
 def _get_mapping():
     """
