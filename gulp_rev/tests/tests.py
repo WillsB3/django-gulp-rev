@@ -23,8 +23,7 @@ class gulp_revTestCase(TestCase):
     def test_is_use_versioned_assets_true(self):
         self.assertTrue(gulp_rev.use_versioned_assets())
 
-    @override_settings(DEBUG=True)
-    @override_settings(GULP_REV_USE_VERSIONED_ASSETS=True)
+    @override_settings(DEBUG=True, GULP_REV_USE_VERSIONED_ASSETS=True)
     def test_ignores_debug_if_use_versioned_assets_specified(self):
         self.assertTrue(gulp_rev.use_versioned_assets())
 
